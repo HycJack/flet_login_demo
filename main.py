@@ -1,4 +1,3 @@
-import math
 import flet as ft
 from views.Home import HomeView
 from views.Login import LoginView

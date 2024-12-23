@@ -1,5 +1,3 @@
-import math
-import time
 import flet as ft
 
 from components.theme_btn import ThemeButton
