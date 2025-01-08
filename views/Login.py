@@ -164,6 +164,23 @@ class LoginView(ft.View):
         self.controls.append(
             self.login_card
         )
+        def handle_close(e):
+            self.page.close(self.dlg_modal)
+            self.page.add(ft.Text(f"Modal dialog closed with action: {e.control.text}"))
+
+        self.dlg_modal = ft.AlertDialog(
+            modal=True,
+            title=ft.Text("Please confirm"),
+            content=ft.Text("Please input user name and password!"),
+            actions=[
+                ft.TextButton("Yes", on_click=handle_close),
+                ft.TextButton("No", on_click=handle_close),
+            ],
+            actions_alignment=ft.MainAxisAlignment.END,
+            on_dismiss=lambda e: self.page.add(
+                ft.Text("Modal dialog dismissed"),
+            ),
+        )
         
 
     def on_key_down(self, e: ft.KeyboardEvent):
@@ -174,6 +191,8 @@ class LoginView(ft.View):
 
     def on_login_click(self, e):
         # Handle login logic here
+        if self.username.value == "" or  self.username.value  is None or self.password.value == "" or  self.password.value  is None :
+            self.page.open(self.dlg_modal)
         if self.username.value == "admin" and self.password.value == "password":
             self.page.session.set("user_name", self.username.value)
             print(self.page.session.get("user_name"))
